@@ -2,7 +2,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 from skimage import data
 from skimage.util import img_as_float
-
+# This code was written by David Noboa.
+# The purpose of this code is to visualize the graph of information retained vs compression ratio.
+# I used Numpy SVD function since the testing image size is too large for our handwritten
+# SVD and would take too much time
 def main():
     # Load Data
     img = data.camera()
@@ -11,11 +14,9 @@ def main():
     print(f"Image shape: {m} x {n}")
 
     # Compute Full SVD
-    # We only need S (singular values) for the chart,
     U, S, Vt = np.linalg.svd(imgFloat, full_matrices=False)
 
     # Calculate "Information Retained" for all possible k
-    # Formula: sum(sigma^2 from 1 to k) / sum(total sigma^2)
     singular_values_squared = S ** 2
     total_variance = np.sum(singular_values_squared)
 
@@ -38,7 +39,6 @@ def main():
 
         compression_ratios.append(ratio)
 
-        # S arrays are 0-indexed, so k=1 is index 0
         info = explained_variance_ratio[k - 1]
         info_retained_values.append(info)
 

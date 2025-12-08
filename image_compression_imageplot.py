@@ -3,6 +3,10 @@ import matplotlib.pyplot as plt
 from skimage import data
 from skimage.util import img_as_float
 
+# This code was written by David Noboa.
+# The purpose of this code is to visualize the effect of SVD compression on the image.
+# I used Numpy SVD function since the testing image size is too large for our handwritten
+# SVD and would take too much time
 def compressionStats(m, n, k):
     original = m * n
     compressed = (m * k) + (n * k) + k
@@ -10,14 +14,14 @@ def compressionStats(m, n, k):
     return original, compressed, reductionRatio
 
 def main():
-    # Load the built-in grayscale test image
+    # Load the grayscale test image
     img = data.camera()           # 512x512
     imgFloat = img_as_float(img)  # convert to float in range [0,1]
 
     m, n = imgFloat.shape
     print(f"Loaded image shape: {m} x {n}")
 
-    # Compute full SVD once so we can slice for many k cheaply
+    # Compute full SVD
     U, S, Vt = np.linalg.svd(imgFloat, full_matrices=False)
     rank = np.sum(S > 1e-12)
     print(f"Estimated rank (numerical): {rank}")
