@@ -1,33 +1,27 @@
-"""
-SVD image compression demo using skimage.data.camera().
-Shows original grayscale image and reconstructed images
-for several choices of k (rank).
-"""
-
 import numpy as np
 import matplotlib.pyplot as plt
 from skimage import data
 from skimage.util import img_as_float
 
+# This code was written by David Noboa.
+# The purpose of this code is to visualize the effect of SVD compression on the image.
+# I used Numpy SVD function since the testing image size is too large for our handwritten
+# SVD and would take too much time
 def compressionStats(m, n, k):
-    """
-    Compute approximate storage (number of scalars) for rank-k representation:
-    mk + nk + k  (U_k, V_k, and k singular values)
-    """
     original = m * n
     compressed = (m * k) + (n * k) + k
     reductionRatio = compressed / original
     return original, compressed, reductionRatio
 
 def main():
-    # Load the built-in grayscale test image
+    # Load the grayscale test image
     img = data.camera()           # 512x512
     imgFloat = img_as_float(img)  # convert to float in range [0,1]
 
     m, n = imgFloat.shape
     print(f"Loaded image shape: {m} x {n}")
 
-    # Compute full SVD once so we can slice for many k cheaply
+    # Compute full SVD
     U, S, Vt = np.linalg.svd(imgFloat, full_matrices=False)
     rank = np.sum(S > 1e-12)
     print(f"Estimated rank (numerical): {rank}")
@@ -62,16 +56,6 @@ def main():
 
     plt.tight_layout()
     plt.show()
-
-    # Save one compressed image to disk
-    kSave = 50
-    Uk = U[:, :kSave]
-    Sk = S[:kSave]
-    Vtk = Vt[:kSave, :]
-    recon50 = np.clip(Uk @ np.diag(Sk) @ Vtk, 0.0, 1.0)
-    # Save using matplotlib
-    plt.imsave("Assets/camera_svd_k50.png", recon50, cmap='gray', vmin=0, vmax=1)
-    print("Saved compressed image camera_svd_k50.png")
 
 if __name__ == "__main__":
     main()
