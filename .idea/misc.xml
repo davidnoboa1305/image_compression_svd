@@ -3,5 +3,5 @@
   <component name="Black">
     <option name="sdkName" value="Image_compression_by_SVD" />
   </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="image_compr_by_SVD_env" project-jdk-type="Python SDK" />
+  <component name="ProjectRootManager" version="2" project-jdk-name="Image_compression_by_SVD" project-jdk-type="Python SDK" />
 </project>
