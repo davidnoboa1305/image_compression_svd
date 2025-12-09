@@ -38,7 +38,7 @@ def main():
 
     # Prepare plotting
     nCols = len(kList) + 1
-    fig, axes = plt.subplots(1, nCols, figsize=(4 * nCols, 4))
+    fig, axes = plt.subplots(1, nCols, figsize=(4 * nCols, 5.5))
     # Show original
     axes[0].imshow(imgFloat, cmap='gray', vmin=0, vmax=1)
     axes[0].set_title("Original")
